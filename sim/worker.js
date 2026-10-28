@@ -28,6 +28,9 @@ onmessage = async ({ data }) => {
       case 'finish': worker.Finish(data.runId); return;
       case 'combine': reply.json = worker.Combine(data.settingsJson, data.chunks); break;
       case 'review': reply.json = await worker.Review(data.rawFight, data.playerId, data.id); break;
+      case 'reviewFight':
+        reply.json = await worker.ReviewFight(data.reportCode, data.fightId, data.playerId, data.clientId, data.clientSecret, data.id);
+        break;
       default: throw new Error(`No worker call named ${data.type}.`);
     }
   } catch (e) {
