@@ -2705,36 +2705,6 @@ td.two span[b-gf111z7je7] {
   font-size: 10px;
   font-variant-numeric: tabular-nums;
 }
-/* _content/FellowshipSim.UI/Layout/ApiStatus.razor.rz.scp.css */
-.status[b-atx7sdttch] {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: transparent;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.dot[b-atx7sdttch] {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: currentColor;
-}
-
-.connected[b-atx7sdttch] {
-  color: var(--good);
-  border-color: color-mix(in srgb, var(--good) 35%, transparent);
-}
-
-.missing[b-atx7sdttch] {
-  color: var(--warn);
-  border-color: color-mix(in srgb, var(--warn) 35%, transparent);
-}
 /* _content/FellowshipSim.UI/Layout/MainLayout.razor.rz.scp.css */
 /* Pinned to the window's top; it holds the results sidebar, so it stacks above the pinned bars of the pages. */
 .top[b-vkspvgdwqn] {
@@ -3168,6 +3138,18 @@ td.two span[b-gf111z7je7] {
   font-size: 12px;
 }
 
+/* A field its switch has turned off: the label dimmed, and the number greyed out with no box to type in. */
+.field.off[b-5e114h2yxs] {
+  opacity: 0.5;
+}
+
+.field input:disabled[b-5e114h2yxs] {
+  color: var(--muted);
+  background: transparent;
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
 .field input[b-5e114h2yxs] {
   width: 120px;
   height: 36px;
@@ -3523,17 +3505,6 @@ td.two span[b-gf111z7je7] {
   color: var(--warn);
   font-size: 11px;
   white-space: nowrap;
-}
-/* _content/FellowshipSim.UI/Replay/SettingsCard.razor.rz.scp.css */
-/* The steps to make an API client, as muted as the hint around them. */
-.steps[b-xzydrqwdb2] {
-  margin: 0 0 10px;
-  padding-left: 22px;
-  color: var(--muted);
-}
-
-.steps li + li[b-xzydrqwdb2] {
-  margin-top: 4px;
 }
 /* _content/FellowshipSim.UI/Shared/Card.razor.rz.scp.css */
 .card[b-fhqvpzxw6i] {
