@@ -1,0 +1,149 @@
+/* The page's colours, fonts and element defaults. Each component's own rules are in its X.razor.css; rules several components share are in design-system.css. */
+
+/* Cinzel for the name and section headings, Inter for the rest; without the network, the fallbacks below. */
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&display=swap");
+
+/* One dark theme: black and gold. */
+:root {
+  /* Native scrollbars and form controls are dark. */
+  color-scheme: dark;
+  --bg: #000000;
+  /* The top bar, and the bar under it. */
+  --header: #0f0f11;
+  --bar: #0a0a0c;
+  --surface: #121215;
+  /* Inputs, and tiles not picked. */
+  --input: #0a0a0c;
+  --text: #ecedee;
+  --muted: #a1a1aa;
+  --border: #27272a;
+  --accent: #b08e58;
+  --accent-text: #0f0f11;
+  /* Headings, the active section and picked tiles' text. */
+  --heading: #d4af6e;
+  /* The background of a picked tile. */
+  --selected: #1c1810;
+  --good: #5fd69a;
+  --warn: #f5a524;
+  --bad: #f87191;
+  --row-hover: #18181c;
+  /* Tooltips: a step lighter than the cards, so a tooltip over a card stands out. */
+  --popover: #1f1f24;
+  --popover-border: #3f3f46;
+  --heading-font: Cinzel, Georgia, serif;
+  --code-font: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --tok-operator: #e0b04e;
+  --tok-number: #5fd3bf;
+  --tok-named: #b99cf0;
+  --tok-resource: #6fb3f2;
+  --tok-buff: #4cc483;
+  --tok-debuff: #f28bb5;
+  --tok-cooldown: #6fd0e0;
+  --tok-unknown: #f87191;
+  /*
+    The colour of each kind of name in the condition builder's value picker, one per ConditionKind id (--kind-<id>). The
+    picker lists the kinds in this order, so each kind's hue is far from the hues of the kinds beside it.
+  */
+  --kind-buff: var(--tok-buff);
+  --kind-debuff: var(--tok-debuff);
+  --kind-dot: oklch(0.78 0.14 60);
+  --kind-cooldown: var(--tok-cooldown);
+  --kind-action: oklch(0.84 0.15 110);
+  --kind-resource: var(--tok-resource);
+  --kind-named: var(--tok-named);
+  --kind-action_value: oklch(0.82 0.11 175);
+  --kind-talent: oklch(0.75 0.15 30);
+  --kind-blessing: oklch(0.78 0.11 268);
+  --kind-legendary: oklch(0.82 0.14 85);
+  --kind-weapon_trait: oklch(0.76 0.16 322);
+  --kind-weapon: oklch(0.80 0.11 225);
+  --kind-active_dot: oklch(0.74 0.07 55);
+  --kind-variable: oklch(0.92 0.07 100);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  /* Bars that run the window's full width reach past the page's own width. */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font:
+    15px/1.5 Inter,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+input,
+select,
+textarea {
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--input);
+  color: var(--text);
+  font: inherit;
+}
+
+/* The hero menu's chevron in place of the browser's arrow, 10px from the edge and 8px from the text. An image cannot read
+   a custom property, so its stroke is --muted's value. */
+select {
+  appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a1a1aa' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 14px;
+}
+
+/* Each page load focuses its first heading (FocusOnNavigate) for screen readers; it needs no ring. */
+h1:focus,
+h2:focus {
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+button {
+  padding: 8px 14px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--accent-text);
+  font: inherit;
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+a {
+  color: var(--heading);
+}
+code {
+  font-size: 13px;
+}
+
+/* The APL Editor is up to 1760px wide. Scoped CSS keeps class names, so the rule reaches MainLayout's main and
+   DesktopShell's content. Each selector has an element name, so its specificity is higher than the scoped max-width
+   rule. */
+main.main:has(.apl-editor),
+div.content:has(.apl-editor) {
+  max-width: min(1760px, 100%);
+}
