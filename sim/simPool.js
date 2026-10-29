@@ -107,13 +107,13 @@ export function cancel(runId) {
  * Downloads a fight from FellowshipLogs on the least busy worker and replays player `playerId` there; `sink` hears
  * OnProgress(text). Resolves to the reply's JSON. The fight never reaches the page.
  */
-export async function reviewFight(reportCode, fightId, playerId, clientId, clientSecret, sink) {
+export async function reviewFight(reportCode, fightId, playerId, accessToken, clientId, clientSecret, sink) {
   ensure();
   const [w] = leastBusy(1);
   await w.ready;
   w.busy++;
   try {
-    return (await call(w, { type: 'reviewFight', reportCode, fightId, playerId, clientId, clientSecret },
+    return (await call(w, { type: 'reviewFight', reportCode, fightId, playerId, accessToken, clientId, clientSecret },
       text => sink.invokeMethodAsync('OnProgress', text))).json;
   } finally {
     w.busy--;
