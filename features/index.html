@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SimFell Features</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;600&display=swap">
+<style>
+  /* One plain column, the app's own black and gold. */
+  :root {
+    color-scheme: dark;
+    --bg: #000000;
+    --surface: #121215;
+    --text: #ecedee;
+    --muted: #a1a1aa;
+    --border: #27272a;
+    --gold: #d4af6e;
+    --header: #0f0f11;
+    --accent: #b08e58;
+    --selected: #1c1810;
+    --heading-font: Cinzel, Georgia, serif;
+    --body-font: Inter, "Segoe UI", Arial, sans-serif;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body-font);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding-block: 40px 60px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  h1, h2 { font-family: var(--heading-font); color: var(--gold); text-wrap: balance; }
+  h1 { font-size: 2.4rem; margin: 0 0 8px; }
+  h2 { font-size: 1.35rem; margin: 36px 0 8px; border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+  p { margin: 0 0 12px; }
+  .intro { color: var(--muted); font-size: 1.05rem; }
+  ul { margin: 0; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  li::marker { color: var(--gold); }
+  b { color: var(--text); }
+  a { color: var(--gold); }
+  a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .feature { margin-top: 44px; }
+  .feature figure { margin: 16px 0 0; }
+  .feature img { display: block; width: 100%; height: auto; border: 1px solid var(--border); border-radius: 6px; }
+  .feature figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 6px; }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: 0.9em; color: var(--gold); }
+  /* The app's top bar (MainLayout.razor.css). */
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--header); }
+  .top {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 15;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 32px;
+    padding-block: 14px;
+    padding-left: max(32px, env(safe-area-inset-left, 0px));
+    padding-right: max(32px, env(safe-area-inset-right, 0px));
+    background: var(--header);
+    border-bottom: 1px solid var(--border);
+  }
+  .brand { display: flex; flex-direction: column; text-decoration: none; }
+  .name { font-family: var(--heading-font); font-size: 22px; font-weight: 700; letter-spacing: 0.06em; line-height: 1.2; }
+  .white { color: #fff; }
+  .tagline { color: var(--muted); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .nav { display: flex; flex-wrap: wrap; gap: 4px; flex: 1; }
+  .nav a {
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .nav a:hover { color: var(--text); }
+  .open {
+    padding: 8px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .open:hover { background: var(--selected); }
+  @media (max-width: 600px) {
+    .top {
+      padding-block: 12px;
+      padding-left: max(16px, env(safe-area-inset-left, 0px));
+      padding-right: max(16px, env(safe-area-inset-right, 0px));
+    }
+  }
+  footer { margin-top: 48px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="/">
+    <span class="name"><span class="white">SIM</span><span class="gold">FELL</span></span>
+    <span class="tagline">Fellowship simulator</span>
+  </a>
+  <nav class="nav" aria-label="Sections">
+    <a href="/">Sim</a>
+    <a href="/replay">Log Replay</a>
+    <a href="/apl">APL Editor</a>
+  </nav>
+  <a class="open" href="/">Open SimFell</a>
+</header>
+
+<div class="page">
+  <h1>Features</h1>
+  <p class="intro">SimFell is a combat simulator for <i>Fellowship</i>. Here's what it can do.</p>
+
+  <section class="feature">
+    <h2>Build your hero</h2>
+    <p>Build your hero from scratch in the builder, or import one.</p>
+    <figure>
+      <img src="images/hero-builder.png" alt="The Hero and Loadout builder with an example Rime build: talents, gear, relics, stat enchants and gems">
+    </figure>
+  </section>
+
+  <section class="feature">
+    <h2>Compare and find upgrades</h2>
+    <p>Sim different builds and action lists against each other, or let Finder work out your next aspect, sigil, glyph, relic, gem or talent.</p>
+    <figure>
+      <img src="images/modes.png" alt="The Modes tab with fight options, Compare and Finder">
+    </figure>
+    <figure>
+      <img src="images/finder.png" alt="A Glyphs finder result ranking each glyph at max rank against the current build">
+    </figure>
+  </section>
+
+  <section class="feature">
+    <h2>See where your damage comes from</h2>
+    <p>View damage breakdowns, example cast sequences and more, in a detailed report you'll find familiar.</p>
+    <figure>
+      <img src="images/damage.png" alt="The damage by ability table from a sim report">
+    </figure>
+  </section>
+
+  <section class="feature">
+    <h2>Write your own action list</h2>
+    <p>A sim is only as good as its APL, so we made it easy to write your own in the APL editor.</p>
+    <figure>
+      <img src="images/apl.png" alt="The APL editor showing a default action list">
+    </figure>
+  </section>
+
+</div>
+</body>
+</html>
