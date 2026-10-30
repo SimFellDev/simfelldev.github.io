@@ -2,20 +2,25 @@
 // selection the arrow keys move. Blazor renders every option. This module sets only `hidden`, `aria-selected` and
 // `aria-activedescendant` on them, and the list's left offset; it adds no node and moves none.
 
-/** Opens the picker's list on `search`, with its `data-picked` option selected. The handle's `dispose` removes the listeners. */
+/**
+ * Opens the picker's list on `search`, or on `list` itself for a picker with no search, with its `data-picked` option
+ * selected. The handle's `dispose` removes the listeners.
+ */
 export function open(button, popup, search, list, component) {
   const options = () => [...list.querySelectorAll('[role="option"]')];
   const visible = () => options().filter((o) => !o.hidden);
   const none = list.querySelector(".none");
+  // The element with keyboard focus while the list is open.
+  const keys = search ?? list;
 
   const select = (option) => {
     for (const o of list.querySelectorAll('[aria-selected="true"]')) o.removeAttribute("aria-selected");
     if (!option) {
-      search.removeAttribute("aria-activedescendant");
+      keys.removeAttribute("aria-activedescendant");
       return;
     }
     option.setAttribute("aria-selected", "true");
-    search.setAttribute("aria-activedescendant", option.id);
+    keys.setAttribute("aria-activedescendant", option.id);
     option.scrollIntoView({ block: "nearest" });
   };
 
@@ -64,16 +69,16 @@ export function open(button, popup, search, list, component) {
   const overlap = popup.getBoundingClientRect().right - (document.documentElement.clientWidth - 8);
   if (overlap > 0) popup.style.left = `${-overlap}px`;
 
-  search.addEventListener("input", filter);
-  search.addEventListener("keydown", onKeyDown);
+  search?.addEventListener("input", filter);
+  keys.addEventListener("keydown", onKeyDown);
   document.addEventListener("mousedown", onOutside, true);
-  search.focus({ preventScroll: true });
+  keys.focus({ preventScroll: true });
   select(list.querySelector("[data-picked]") ?? visible()[0]);
 
   return {
     dispose: () => {
-      search.removeEventListener("input", filter);
-      search.removeEventListener("keydown", onKeyDown);
+      search?.removeEventListener("input", filter);
+      keys.removeEventListener("keydown", onKeyDown);
       document.removeEventListener("mousedown", onOutside, true);
     },
   };
