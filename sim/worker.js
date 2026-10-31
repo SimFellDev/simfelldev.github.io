@@ -1,10 +1,11 @@
 // One sim worker (simPool.js starts them): a .NET runtime of its own from the app's assemblies, without the page, running
 // the SimWorker methods it is asked for. It says 'ready' (with its start time) once it can take calls; each call's reply
 // carries the call's id, with its JSON or its error.
-import { dotnet } from '../_framework/dotnet.js';
-
-// With this worker's build stamp (?v=), so fights.js is of the same build.
-const fights = await import('./fights.js' + new URL(import.meta.url).search);
+// The build's dotnet.js (?dotnet=, from the page's import map) and fights.js (with the build stamp, ?v=), so they are of
+// this worker's build.
+const params = new URL(import.meta.url).searchParams;
+const { dotnet } = await import(params.get('dotnet') ?? '../_framework/dotnet.js');
+const fights = await import(`./fights.js?v=${params.get('v') ?? ''}`);
 
 const began = performance.now();
 let worker;

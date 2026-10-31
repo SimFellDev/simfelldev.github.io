@@ -20,8 +20,11 @@ export function size() {
 }
 
 function spawn() {
-  // With this script's build stamp (?v=), so the worker is of the same build.
-  const worker = new Worker(new URL('./worker.js' + new URL(import.meta.url).search, import.meta.url), { type: 'module' });
+  // With this script's build stamp (?v=), so the worker is of the same build; and this build's dotnet.js, from the page's
+  // import map, which a worker does not have.
+  const url = new URL('./worker.js' + new URL(import.meta.url).search, import.meta.url);
+  url.searchParams.set('dotnet', import.meta.resolve?.('../_framework/dotnet.js') ?? new URL('../_framework/dotnet.js', import.meta.url).href);
+  const worker = new Worker(url, { type: 'module' });
   const w = { worker, calls: new Map(), busy: 0, dead: false };
   w.ready = new Promise((resolve, reject) => { w.resolve = resolve; w.reject = reject; });
   w.ready.catch(() => { });
