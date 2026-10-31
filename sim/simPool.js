@@ -9,9 +9,14 @@ const workers = [];
 const cancelled = new Set();
 let nextCall = 1;
 
+/** The browser's logical processors (2 when it does not say). */
+export function cores() {
+  return navigator.hardwareConcurrency || 2;
+}
+
 /** The workers a sim can use: the cores but the page's, from 1 to MaxWorkers. */
 export function size() {
-  return Math.max(1, Math.min((navigator.hardwareConcurrency || 2) - 1, MaxWorkers));
+  return Math.max(1, Math.min(cores() - 1, MaxWorkers));
 }
 
 function spawn() {
