@@ -20,7 +20,8 @@ export function size() {
 }
 
 function spawn() {
-  const worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+  // With this script's build stamp (?v=), so the worker is of the same build.
+  const worker = new Worker(new URL('./worker.js' + new URL(import.meta.url).search, import.meta.url), { type: 'module' });
   const w = { worker, calls: new Map(), busy: 0, dead: false };
   w.ready = new Promise((resolve, reject) => { w.resolve = resolve; w.reject = reject; });
   w.ready.catch(() => { });

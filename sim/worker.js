@@ -2,7 +2,9 @@
 // the SimWorker methods it is asked for. It says 'ready' (with its start time) once it can take calls; each call's reply
 // carries the call's id, with its JSON or its error.
 import { dotnet } from '../_framework/dotnet.js';
-import * as fights from './fights.js';
+
+// With this worker's build stamp (?v=), so fights.js is of the same build.
+const fights = await import('./fights.js' + new URL(import.meta.url).search);
 
 const began = performance.now();
 let worker;
