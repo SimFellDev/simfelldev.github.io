@@ -1032,15 +1032,15 @@ h3[b-i64136kgdr] {
 }
 
 /* The accent button, as Run sim and Use this profile are: sharing a build is a feature to notice. At the toolbar's end,
-   apart from the rest. */
-.toolbar .share-button[b-1mhqfc0l60] {
+   apart from the rest. Its classes say nothing of sharing: ad blockers' social lists hide .share-button and the like. */
+.toolbar .build-link-button[b-1mhqfc0l60] {
   margin-left: auto;
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
 
-.share-button svg[b-1mhqfc0l60] {
+.build-link-button svg[b-1mhqfc0l60] {
   flex: none;
 }
 
@@ -1839,7 +1839,7 @@ h3[b-i64136kgdr] {
   resize: vertical;
 }
 
-.export input.share-link[b-1mhqfc0l60] {
+.export input.build-link-field[b-1mhqfc0l60] {
   width: 100%;
   box-sizing: border-box;
   font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
