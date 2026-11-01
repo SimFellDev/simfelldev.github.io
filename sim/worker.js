@@ -31,7 +31,7 @@ onmessage = async ({ data }) => {
       case 'start': worker.Start(data.runId, data.profileJson, data.settingsJson); break;
       case 'chunk': reply.json = worker.Chunk(data.runId, data.chunk); break;
       case 'finish': worker.Finish(data.runId); return;
-      case 'combine': reply.json = worker.Combine(data.settingsJson, data.chunks); break;
+      case 'combine': reply.json = worker.Combine(data.profileJson, data.settingsJson, data.chunks); break;
       case 'review': reply.json = await worker.Review(data.rawFight, data.playerId, data.id); break;
       case 'reviewFight': {
         // A fight the browser keeps replays from it, costing no FellowshipLogs points; any other is downloaded and kept.
@@ -41,6 +41,14 @@ onmessage = async ({ data }) => {
           ? await worker.Review(kept, data.playerId, data.id)
           : await worker.ReviewFight(data.reportCode, data.fightId, data.playerId, data.accessToken, data.clientId,
             data.clientSecret, data.id);
+        break;
+      }
+      case 'dungeonFight': {
+        // A dungeon from the fight the browser keeps, as reviewFight replays one, or else downloaded.
+        const kept = await fights.read(fights.key(data.reportCode, data.fightId));
+        if (kept != null) postMessage({ id: data.id, type: 'progress', text: 'Using the fight saved in this browser' });
+        reply.json = await worker.ReadDungeonFight(data.reportCode, data.fightId, data.playerId, kept ?? '', data.accessToken,
+          data.clientId, data.clientSecret, data.id);
         break;
       }
       default: throw new Error(`No worker call named ${data.type}.`);

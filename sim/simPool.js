@@ -101,7 +101,7 @@ export async function simulate(runId, profileJson, settingsJson, chunkCount, wan
       }
     }));
     if (done < chunkCount) throw new DOMException('The sim was cancelled.', 'AbortError');
-    return (await call(chosen[0], { type: 'combine', settingsJson, chunks })).json;
+    return (await call(chosen[0], { type: 'combine', profileJson, settingsJson, chunks })).json;
   } finally {
     cancelled.delete(runId);
   }
@@ -123,6 +123,23 @@ export async function reviewFight(reportCode, fightId, playerId, accessToken, cl
   w.busy++;
   try {
     return (await call(w, { type: 'reviewFight', reportCode, fightId, playerId, accessToken, clientId, clientSecret },
+      text => sink.invokeMethodAsync('OnProgress', text))).json;
+  } finally {
+    w.busy--;
+  }
+}
+
+/**
+ * Downloads a fight from FellowshipLogs on the least busy worker, or takes the one the browser keeps, and reads its dungeon
+ * with player `playerId`'s hero share there; `sink` hears OnProgress(text). Resolves to the reply's JSON.
+ */
+export async function dungeonFight(reportCode, fightId, playerId, accessToken, clientId, clientSecret, sink) {
+  ensure();
+  const [w] = leastBusy(1);
+  await w.ready;
+  w.busy++;
+  try {
+    return (await call(w, { type: 'dungeonFight', reportCode, fightId, playerId, accessToken, clientId, clientSecret },
       text => sink.invokeMethodAsync('OnProgress', text))).json;
   } finally {
     w.busy--;

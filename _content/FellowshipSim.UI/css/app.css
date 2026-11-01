@@ -40,6 +40,7 @@
   --tok-debuff: #f28bb5;
   --tok-cooldown: #6fd0e0;
   --tok-unknown: #f87191;
+  --tok-function: var(--tok-operator);
   /*
     The colour of each kind of name in the condition builder's value picker, one per ConditionKind id (--kind-<id>). The
     picker lists the kinds in this order, so each kind's hue is far from the hues of the kinds beside it.
@@ -59,6 +60,7 @@
   --kind-weapon: oklch(0.80 0.11 225);
   --kind-active_dot: oklch(0.74 0.07 55);
   --kind-variable: oklch(0.92 0.07 100);
+  --kind-prev: oklch(0.80 0.13 150);
 }
 
 * {
