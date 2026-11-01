@@ -2198,6 +2198,23 @@ h3[b-y1eiyjfnwa] {
 .actions .icon-button[b-y1eiyjfnwa] {
   padding: 3px 8px;
 }
+
+.favorite.on[b-y1eiyjfnwa] {
+  color: var(--warn);
+  border-color: var(--warn);
+}
+
+.favorite.on[b-y1eiyjfnwa]  .icon path {
+  fill: currentColor;
+}
+
+.rename[b-y1eiyjfnwa] {
+  width: 100%;
+  min-width: 0;
+  margin: 4px 0;
+  font: inherit;
+  font-weight: 600;
+}
 /* _content/FellowshipSim.UI/Jobs/RunsResult.razor.rz.scp.css */
 /* A compare's or finder's runs: tiles, then the runs table with a change bar per run. */
 .tiles[b-gf111z7je7] {
