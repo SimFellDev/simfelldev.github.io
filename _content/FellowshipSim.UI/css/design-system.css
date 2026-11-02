@@ -196,3 +196,68 @@
   top: var(--arrow);
   transform: translate(50%, -50%) rotate(135deg);
 }
+
+/* The colour of a token of an action list or expression: tok-<kind>, the AplTokenKind value in lower case (TokenText and
+   Highlight). tok-error marks the part of the text at a parse error. */
+.tok-operator {
+  color: var(--tok-operator);
+}
+
+.tok-number {
+  color: var(--tok-number);
+}
+
+.tok-named {
+  color: var(--tok-named);
+}
+
+.tok-resource {
+  color: var(--tok-resource);
+}
+
+.tok-buff {
+  color: var(--tok-buff);
+}
+
+.tok-debuff {
+  color: var(--tok-debuff);
+}
+
+.tok-cooldown {
+  color: var(--tok-cooldown);
+}
+
+.tok-function {
+  color: var(--tok-function);
+}
+
+.tok-comment {
+  color: var(--muted);
+  font-style: italic;
+}
+
+.tok-list {
+  color: var(--tok-list);
+}
+
+.tok-keyword {
+  color: var(--tok-keyword);
+}
+
+.tok-unknown {
+  color: var(--tok-unknown);
+  text-decoration: underline wavy;
+  text-underline-offset: 3px;
+}
+
+.tok-error {
+  background: color-mix(in srgb, var(--bad) 25%, transparent);
+}
+
+/* The way back from a view, over its first card: a sim result to the editor, the APL Debugger to its opener. */
+.result-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 12px;
+}

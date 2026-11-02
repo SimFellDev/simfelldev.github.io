@@ -32,6 +32,7 @@ onmessage = async ({ data }) => {
       case 'chunk': reply.json = worker.Chunk(data.runId, data.chunk); break;
       case 'finish': worker.Finish(data.runId); return;
       case 'combine': reply.json = worker.Combine(data.profileJson, data.settingsJson, data.chunks); break;
+      case 'traceFight': reply.json = await worker.TraceFight(data.profileJson, data.settingsJson); break;
       case 'review': reply.json = await worker.Review(data.rawFight, data.playerId, data.id); break;
       case 'reviewFight': {
         // A fight the browser keeps replays from it, costing no FellowshipLogs points; any other is downloaded and kept.

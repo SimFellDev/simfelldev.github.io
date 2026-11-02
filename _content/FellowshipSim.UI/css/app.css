@@ -41,6 +41,8 @@
   --tok-cooldown: #6fd0e0;
   --tok-unknown: #f87191;
   --tok-function: var(--tok-operator);
+  --tok-list: #f2a65a;
+  --tok-keyword: #9aa5ce;
   /*
     The colour of each kind of name in the condition builder's value picker, one per ConditionKind id (--kind-<id>). The
     picker lists the kinds in this order, so each kind's hue is far from the hues of the kinds beside it.
@@ -61,6 +63,7 @@
   --kind-active_dot: oklch(0.74 0.07 55);
   --kind-variable: oklch(0.92 0.07 100);
   --kind-prev: oklch(0.80 0.13 150);
+  --kind-prev_gcd: oklch(0.82 0.12 300);
 }
 
 * {
@@ -142,10 +145,12 @@ code {
   font-size: 13px;
 }
 
-/* The APL Editor is up to 1760px wide. Scoped CSS keeps class names, so the rule reaches MainLayout's main and
-   DesktopShell's content. Each selector has an element name, so its specificity is higher than the scoped max-width
-   rule. */
+/* The APL Editor and the APL Debugger are up to 1760px wide. Scoped CSS keeps class names, so the rule reaches
+   MainLayout's main and DesktopShell's content. Each selector has an element name, so its specificity is higher than the
+   scoped max-width rule. */
 main.main:has(.apl-editor),
-div.content:has(.apl-editor) {
+div.content:has(.apl-editor),
+main.main:has(.apl-debugger),
+div.content:has(.apl-debugger) {
   max-width: min(1760px, 100%);
 }

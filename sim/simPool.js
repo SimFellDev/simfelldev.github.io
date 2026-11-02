@@ -146,6 +146,20 @@ export async function dungeonFight(reportCode, fightId, playerId, accessToken, c
   }
 }
 
+/** Fights the first fight of a sim on the least busy worker, tracing every decision. Resolves to the reply's JSON. */
+export async function traceFight(profileJson, settingsJson) {
+  ensure();
+  const [w] = leastBusy(1);
+  await w.ready;
+  w.busy++;
+  try {
+    return (await call(w, { type: 'traceFight', profileJson, settingsJson })).json;
+  } finally {
+    w.busy--;
+  }
+}
+
+
 /** Replays player `playerId` of a raw fight on the least busy worker; `sink` hears OnProgress(text). Resolves to the reply's JSON. */
 export async function review(rawFight, playerId, sink) {
   ensure();
