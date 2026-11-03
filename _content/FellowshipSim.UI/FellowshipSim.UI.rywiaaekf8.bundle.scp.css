@@ -996,6 +996,226 @@ h3[b-i64136kgdr] {
   display: inline-block;
   border: 1px dashed var(--border);
 }
+/* _content/FellowshipSim.UI/Build/GearPicker.razor.rz.scp.css */
+.gear-picker[b-lhewhn462x] {
+  max-width: 1080px;
+}
+
+/* The slot on the left, the tempers in the middle, the close button on the right. */
+.picker-bar[b-lhewhn462x] {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+}
+
+.picker-title[b-lhewhn462x] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slot-icon[b-lhewhn462x] {
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.slot-icon.empty[b-lhewhn462x] {
+  padding: 7px;
+  opacity: 0.6;
+}
+
+.close[b-lhewhn462x] {
+  justify-self: end;
+}
+
+.tempers[b-lhewhn462x] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tempers-label[b-lhewhn462x] {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.stepper[b-lhewhn462x] {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stepper input[b-lhewhn462x] {
+  width: 48px;
+  padding: 4px 8px;
+  background: var(--surface);
+  text-align: right;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.stepper input[b-lhewhn462x]::-webkit-outer-spin-button,
+.stepper input[b-lhewhn462x]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.tempers-max[b-lhewhn462x] {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* The items, one per row: icon, name, a column per stat, the dungeons it drops in. */
+.picker-table[b-lhewhn462x] {
+  max-height: min(640px, calc(100vh - 160px));
+  overflow: auto;
+  padding: 0 12px 12px;
+}
+
+.picker-row[b-lhewhn462x] {
+  display: grid;
+  grid-template-columns: 36px minmax(200px, 1fr) repeat(6, 58px) minmax(180px, 260px);
+  gap: 0 12px;
+  align-items: center;
+  min-width: 900px;
+}
+
+.picker-head[b-lhewhn462x] {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 10px 12px 8px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sort[b-lhewhn462x] {
+  padding: 4px 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.sort:hover[b-lhewhn462x] {
+  color: var(--text);
+}
+
+.sort.active[b-lhewhn462x] {
+  color: var(--heading);
+}
+
+.item[b-lhewhn462x] {
+  width: 100%;
+  margin-top: 4px;
+  padding: 7px 12px;
+  background: var(--input);
+  color: var(--text);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 15px;
+  text-align: left;
+}
+
+.item:hover[b-lhewhn462x] {
+  border-color: var(--accent);
+}
+
+.item.selected[b-lhewhn462x] {
+  background: var(--selected);
+  border-color: var(--accent);
+}
+
+.item-icon[b-lhewhn462x] {
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.item-icon.legendary[b-lhewhn462x] {
+  border-color: var(--legendary);
+}
+
+.item-icon.empty[b-lhewhn462x] {
+  padding: 6px;
+  opacity: 0.6;
+}
+
+.item-name[b-lhewhn462x] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  font-weight: 600;
+}
+
+.item-name > span:first-child[b-lhewhn462x] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.legendary-name[b-lhewhn462x] {
+  color: var(--legendary);
+}
+
+.empty-item[b-lhewhn462x] {
+  color: var(--muted);
+}
+
+.empty-item .item-name[b-lhewhn462x] {
+  font-weight: 400;
+}
+
+.equipped[b-lhewhn462x] {
+  flex: none;
+  padding: 0 7px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--heading);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.stat[b-lhewhn462x] {
+  font-variant-numeric: tabular-nums;
+}
+
+.stat.none[b-lhewhn462x] {
+  color: var(--border);
+}
+
+/* The highest value of a stat among the slot's items. */
+.stat.high[b-lhewhn462x] {
+  color: var(--heading);
+  font-weight: 600;
+}
+
+.stat.sorted[b-lhewhn462x] {
+  padding-left: 4px;
+  border-radius: 4px;
+  background: rgb(176 142 88 / 0.1);
+}
+
+.source[b-lhewhn462x] {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.3;
+}
 /* _content/FellowshipSim.UI/Build/HeroEditor.razor.rz.scp.css */
 .toolbar input[b-1mhqfc0l60] {
   flex: 1 1 220px;
@@ -1116,13 +1336,13 @@ h3[b-i64136kgdr] {
   color: var(--heading);
 }
 
-/* The ratings typed in: a label and its number on one line. */
+/* The gear's stats: a name and its numbers on one line. */
 .ratings[b-1mhqfc0l60] {
   display: grid;
   gap: 6px;
 }
 
-.ratings label[b-1mhqfc0l60] {
+.ratings .rating-line[b-1mhqfc0l60] {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1131,12 +1351,13 @@ h3[b-i64136kgdr] {
   font-size: 12px;
 }
 
-/* A number typed in, without the browser's up and down arrows. */
-.ratings input[b-1mhqfc0l60] {
+/* A stat as the gear gives it, in the Gear column. */
+.ratings .value[b-1mhqfc0l60] {
   width: 96px;
+  color: var(--text);
+  font-size: 14px;
   text-align: right;
-  appearance: textfield;
-  -moz-appearance: textfield;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Primary and Secondary, with the Gear and Total column names over the first group, right-aligned as the numbers. */
@@ -1164,11 +1385,10 @@ h3[b-i64136kgdr] {
   color: var(--muted);
 }
 
-/* The input's 10px padding and 1px border, so the name ends where its numbers do. */
+/* Over the Gear column, so the name ends where its numbers do. */
 .ratings .stat-group .column[b-1mhqfc0l60] {
   box-sizing: border-box;
   width: 96px;
-  padding-right: 11px;
   text-align: right;
 }
 
@@ -1184,12 +1404,6 @@ h3[b-i64136kgdr] {
   text-align: right;
   color: var(--heading);
   font-variant-numeric: tabular-nums;
-}
-
-.ratings input[b-1mhqfc0l60]::-webkit-outer-spin-button,
-.ratings input[b-1mhqfc0l60]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
 
 .gem-totals[b-1mhqfc0l60] {
@@ -1842,6 +2056,174 @@ h3[b-i64136kgdr] {
 
 .gear-count .full[b-1mhqfc0l60] {
   font-weight: 400;
+}
+
+/* The gear slots: the armor down the left column, the neck, wrists, rings, relics and weapon down the right. */
+.gear-slots[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(7, auto);
+  grid-auto-flow: column;
+  gap: 8px;
+}
+
+.gear-slot[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  grid-template-areas: "icon label" "icon item" "stats stats";
+  align-content: start;
+  gap: 4px 12px;
+  padding: 8px 10px;
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.gear-slot.worn[b-1mhqfc0l60] {
+  border-color: #3a3226;
+}
+
+.slot-icon[b-1mhqfc0l60] {
+  grid-area: icon;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.slot-icon.empty[b-1mhqfc0l60] {
+  padding: 7px;
+  opacity: 0.6;
+}
+
+.slot-icon.legendary[b-1mhqfc0l60] {
+  border-color: var(--legendary);
+}
+
+.slot-label[b-1mhqfc0l60] {
+  grid-area: label;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.slot-button[b-1mhqfc0l60] {
+  grid-area: item;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  padding: 6px 10px;
+  background: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 13px;
+  text-align: left;
+}
+
+.slot-button:hover[b-1mhqfc0l60] {
+  border-color: var(--accent);
+}
+
+.slot-button svg[b-1mhqfc0l60] {
+  flex: none;
+}
+
+.slot-item[b-1mhqfc0l60] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.slot-item.none[b-1mhqfc0l60] {
+  color: var(--muted);
+}
+
+.legendary-name[b-1mhqfc0l60] {
+  color: var(--legendary);
+}
+
+/* The item's stats on one line under it; a narrow column moves the last to a second line. */
+.slot-stats[b-1mhqfc0l60] {
+  grid-area: stats;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+  margin-top: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+.slot-stat[b-1mhqfc0l60] {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.slot-stat strong[b-1mhqfc0l60] {
+  color: var(--text);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.slot-stat.primary strong[b-1mhqfc0l60] {
+  color: var(--heading);
+}
+
+.import-button[b-1mhqfc0l60] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 760px) {
+  .gear-slots[b-1mhqfc0l60] {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-auto-flow: row;
+  }
+}
+
+/* The enchant cards in two columns, each card under the one above it, so a folded card lets the next move up. */
+.loadout-columns[b-1mhqfc0l60] {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.loadout-column[b-1mhqfc0l60] {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.loadout-card[b-1mhqfc0l60] {
+  min-width: 0;
+}
+
+/* One column on a narrow window, the cards in their pairs' order (each wrapper's order). */
+@media (max-width: 1200px) {
+  .loadout-columns[b-1mhqfc0l60] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .loadout-column[b-1mhqfc0l60] {
+    display: contents;
+  }
 }
 /* _content/FellowshipSim.UI/Build/RankedChoices.razor.rz.scp.css */
 .grid[b-8icmnmumaq] {
@@ -3793,7 +4175,7 @@ td.two span[b-gf111z7je7] {
   resize: vertical;
 }
 
-/* The file picker above the dungeon text, as on the Import tab. */
+/* The file picker above the dungeon text, as in Import. */
 .text[b-li39ns0rv5]  .file {
   display: block;
   max-width: 100%;
@@ -4509,6 +4891,16 @@ textarea.comment[b-nls708qibr] {
   color: var(--text);
   font-size: 15px;
 }
+
+/* The Import dialog: the cards on the page's black, as the Import tab had them. */
+.import-dialog[b-zqamy3v6wi] {
+  max-width: 860px;
+}
+
+.import-body[b-zqamy3v6wi] {
+  padding: 0 20px 18px;
+  background: var(--bg);
+}
 /* _content/FellowshipSim.UI/Replay/ImportCard.razor.rz.scp.css */
 .linked-bar[b-y13qcvfuyc] {
   display: flex;
@@ -4737,6 +5129,49 @@ textarea.comment[b-nls708qibr] {
   .card[b-fhqvpzxw6i] {
     padding: 14px 16px;
   }
+}
+
+/* A collapsible section's title: a button that folds the section to its title line. */
+.collapse[b-fhqvpzxw6i] {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.collapse:hover[b-fhqvpzxw6i] {
+  color: var(--text);
+}
+
+.chevron[b-fhqvpzxw6i] {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.15s;
+}
+
+.collapsed .chevron[b-fhqvpzxw6i] {
+  transform: rotate(-90deg);
+}
+
+/* A folded section is its title line alone. */
+.collapsed .title[b-fhqvpzxw6i],
+.collapsed .head[b-fhqvpzxw6i] {
+  margin: 0;
 }
 /* _content/FellowshipSim.UI/Shared/Message.razor.rz.scp.css */
 .message[b-hhjziu8ad3] {

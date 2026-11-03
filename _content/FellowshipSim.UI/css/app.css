@@ -27,6 +27,8 @@
   --warn: #f5a524;
   --bad: #f87191;
   --row-hover: #18181c;
+  /* A legendary item's name and frame, as the game colours them. */
+  --legendary: #ff8c42;
   /* Tooltips: a step lighter than the cards, so a tooltip over a card stands out. */
   --popover: #1f1f24;
   --popover-border: #3f3f46;
