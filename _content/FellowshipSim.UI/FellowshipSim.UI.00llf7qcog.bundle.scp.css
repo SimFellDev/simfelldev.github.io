@@ -1328,6 +1328,86 @@ h3[b-i64136kgdr] {
   font-size: 13px;
   line-height: 1.3;
 }
+
+/* A phone: the slot and Close on the head's first line, Temper on the second. Each item is two lines, its name then its
+   six stats under the head's six stat names, and the dungeons it drops in under them. */
+@media (max-width: 600px) {
+  .picker-bar[b-lhewhn462x] {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "title close"
+      "tempers tempers";
+    row-gap: 4px;
+    padding-bottom: 10px;
+  }
+
+  .picker-title[b-lhewhn462x] {
+    grid-area: title;
+  }
+
+  .tempers[b-lhewhn462x] {
+    grid-area: tempers;
+  }
+
+  .close[b-lhewhn462x] {
+    grid-area: close;
+  }
+
+  .stepper .icon-button[b-lhewhn462x] {
+    min-width: 40px;
+    min-height: 40px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .stepper input[b-lhewhn462x] {
+    font-size: 16px;
+  }
+
+  .picker-table[b-lhewhn462x] {
+    max-height: calc(100dvh - 150px);
+    padding: 0 8px 12px;
+  }
+
+  .picker-row[b-lhewhn462x] {
+    grid-template-columns: 36px repeat(6, minmax(0, 1fr));
+    gap: 2px 6px;
+    min-width: 0;
+  }
+
+  .picker-row > :first-child[b-lhewhn462x] {
+    grid-row: span 2;
+    align-self: start;
+  }
+
+  .item-name[b-lhewhn462x],
+  .source[b-lhewhn462x],
+  .picker-head .first[b-lhewhn462x] {
+    grid-column: 2 / -1;
+  }
+
+  .picker-head[b-lhewhn462x] {
+    padding: 8px 10px 6px;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+  }
+
+  .picker-head > span:last-child[b-lhewhn462x] {
+    display: none;
+  }
+
+  .item[b-lhewhn462x] {
+    padding: 8px 10px;
+  }
+
+  .stat[b-lhewhn462x] {
+    font-size: 13px;
+  }
+
+  .source[b-lhewhn462x] {
+    font-size: 12px;
+  }
+}
 /* _content/FellowshipSim.UI/Build/HeroEditor.razor.rz.scp.css */
 /* The build menu, then the build's icon buttons; on a narrow window the icons go under the menu. */
 .toolbar[b-1mhqfc0l60] {
@@ -2459,6 +2539,8 @@ h3[b-i64136kgdr] {
   .loadout-columns[b-1mhqfc0l60] {
     display: flex;
     flex-direction: column;
+    /* Each card the column's full width, not its content's. */
+    align-items: stretch;
   }
 
   .loadout-column[b-1mhqfc0l60] {
@@ -2484,6 +2566,124 @@ h3[b-i64136kgdr] {
   background: var(--bad);
   border-color: var(--bad);
   color: #fff;
+}
+
+/* The ⋯ button shows on a phone alone. */
+.more-tools[b-1mhqfc0l60] {
+  display: none;
+}
+
+/* A phone: the build menu, Share and ⋯ on one line; ⋯ opens New build and the icon buttons on the line under it. The
+   sections run edge to edge (Card.razor.css), the gold frame stays for picked things, a box inside a section is a row,
+   and a talent tier's name sits over its three talents. */
+@media (max-width: 600px) {
+  .toolbar[b-1mhqfc0l60] {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .build-select[b-1mhqfc0l60] {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .toolbar .build-link-button[b-1mhqfc0l60],
+  .more-tools[b-1mhqfc0l60] {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    min-height: 44px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .toolbar .build-link-button .label[b-1mhqfc0l60] {
+    display: none;
+  }
+
+  .more-tools[b-1mhqfc0l60] {
+    order: 1;
+    color: var(--muted);
+  }
+
+  .more-tools svg[b-1mhqfc0l60] {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+  }
+
+  .more-tools[aria-expanded="true"][b-1mhqfc0l60] {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
+  .new-build[b-1mhqfc0l60],
+  .icons[b-1mhqfc0l60] {
+    display: none;
+    order: 2;
+  }
+
+  .tools-open .new-build[b-1mhqfc0l60],
+  .tools-open .icons[b-1mhqfc0l60] {
+    display: flex;
+  }
+
+  .tools-open .icons[b-1mhqfc0l60] {
+    flex-basis: 100%;
+  }
+
+  .icons .icon-button[b-1mhqfc0l60] {
+    width: 44px;
+    height: 44px;
+  }
+
+  .sidebar[b-1mhqfc0l60] {
+    overflow: visible;
+  }
+
+  .sidebar[b-1mhqfc0l60]  .card {
+    margin: 0 -16px;
+    border-color: var(--border);
+  }
+
+  .editor[b-1mhqfc0l60] {
+    gap: 8px;
+    margin: 8px 0;
+  }
+
+  .editor-main[b-1mhqfc0l60],
+  .pair[b-1mhqfc0l60],
+  .loadout-columns[b-1mhqfc0l60],
+  .loadout-column[b-1mhqfc0l60] {
+    gap: 8px;
+  }
+
+  .editor-main[b-1mhqfc0l60]  .card {
+    margin: 0 -16px;
+  }
+
+  .slots-total[b-1mhqfc0l60] {
+    padding: 10px 0 0;
+    border: none;
+    border-top: 1px solid var(--border);
+    border-radius: 0;
+  }
+
+  .tree-row[b-1mhqfc0l60] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .tier[b-1mhqfc0l60] {
+    grid-column: 1 / -1;
+    margin-top: 6px;
+    font-family: Inter, system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
 }
 /* _content/FellowshipSim.UI/Build/RankedChoices.razor.rz.scp.css */
 .grid[b-8icmnmumaq] {
@@ -3209,6 +3409,65 @@ h3[b-y1eiyjfnwa] {
   margin: 4px 0;
   font: inherit;
   font-weight: 600;
+}
+
+/* A phone: the button is the last place of the bar pinned to the window's bottom (MainLayout.razor.css), and the sidebar
+   leaves a strip of the page showing, which closes it. */
+@media (max-width: 600px) {
+  .results .toggle[b-y1eiyjfnwa] {
+    position: fixed;
+    right: 0;
+    bottom: env(safe-area-inset-bottom, 0px);
+    width: 25vw;
+    height: 64px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .results .toggle[aria-expanded="true"][b-y1eiyjfnwa] {
+    color: var(--heading);
+  }
+
+  .icon[b-y1eiyjfnwa] {
+    width: 22px;
+    height: 22px;
+  }
+
+  .count[b-y1eiyjfnwa] {
+    position: absolute;
+    top: 8px;
+    left: calc(50% + 6px);
+    min-width: 16px;
+    padding: 0 4px;
+    font-size: 10px;
+    line-height: 16px;
+  }
+
+  .sidebar[b-y1eiyjfnwa] {
+    width: min(360px, calc(100vw - 40px));
+  }
+
+  /* The value and the date each on one line; the date goes under the value when both do not fit. */
+  .item-meta[b-y1eiyjfnwa] {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0 12px;
+  }
+
+  .item-meta > span[b-y1eiyjfnwa] {
+    white-space: nowrap;
+  }
+
+  .backdrop[b-y1eiyjfnwa] {
+    background: rgb(0 0 0 / 0.72);
+  }
 }
 /* _content/FellowshipSim.UI/Jobs/RunsResult.razor.rz.scp.css */
 /* A compare's or finder's runs: tiles, then the runs table with a change bar per run. */
@@ -4075,6 +4334,20 @@ td.two span[b-gf111z7je7] {
   border-radius: 50%;
   background: var(--good);
 }
+
+/* A phone: the account fits on the one-line top bar beside the name. */
+@media (max-width: 600px) {
+  .account .link-button[b-p5ncnrcl4m] {
+    min-height: 44px;
+    padding: 0 6px;
+  }
+
+  button.secondary-button[b-p5ncnrcl4m] {
+    padding: 6px 10px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+}
 /* _content/FellowshipSim.UI/Layout/MainLayout.razor.rz.scp.css */
 /* Pinned to the window's top; it holds the results sidebar, so it stacks above the pinned bars of the pages. */
 .top[b-vkspvgdwqn] {
@@ -4160,13 +4433,78 @@ td.two span[b-gf111z7je7] {
   padding: 0 32px 48px;
 }
 
+/* A section's icon shows in the phone's bottom bar alone. */
+.nav-icon[b-vkspvgdwqn] {
+  display: none;
+}
+
+/* A phone: the top bar is one line, the name and the FellowshipLogs account, and it slides away as the page scrolls down
+   (headerHeight.js moves its top). The sections and Sim results are a bar pinned to the window's bottom: Sim results'
+   button is in .actions, and ResultsSidebar.razor.css puts it in the bar's last place. */
 @media (max-width: 600px) {
   .top[b-vkspvgdwqn] {
-    padding: 12px 16px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 8px;
+    height: 52px;
+    padding: 0 8px 0 16px;
+    transition: top 0.2s;
+  }
+
+  .name[b-vkspvgdwqn] {
+    font-size: 18px;
+  }
+
+  .tagline[b-vkspvgdwqn] {
+    display: none;
+  }
+
+  .nav[b-vkspvgdwqn] {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    height: calc(64px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--header);
+    border-top: 1px solid var(--border);
+  }
+
+  .nav[b-vkspvgdwqn]  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    font-size: 11px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .nav[b-vkspvgdwqn]  a.active {
+    background: transparent;
+    color: var(--heading);
+  }
+
+  .nav-icon[b-vkspvgdwqn] {
+    display: block;
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .main[b-vkspvgdwqn] {
-    padding: 0 16px 40px;
+    padding: 0 16px calc(88px + env(safe-area-inset-bottom, 0px));
   }
 }
 /* _content/FellowshipSim.UI/Layout/UpdateBanner.razor.rz.scp.css */
@@ -5288,6 +5626,72 @@ textarea.comment[b-nls708qibr] {
   align-items: center;
   gap: 8px;
 }
+
+/* The steps' short names and the summary line show on a phone alone. */
+.tab .short[b-zqamy3v6wi],
+.summary-line[b-zqamy3v6wi] {
+  display: none;
+}
+
+/* A phone: the steps and Run sim on one 48px line, the steps scrolling sideways when they do not fit; the summary moves
+   under the bar, as the page's first line. The bar moves up with the top bar (headerHeight.js). */
+@media (max-width: 600px) {
+  .steps[b-zqamy3v6wi] {
+    flex-wrap: nowrap;
+    gap: 0 8px;
+    transition: top 0.2s;
+  }
+
+  .tabs[b-zqamy3v6wi] {
+    flex: 1 1 auto;
+    flex-wrap: nowrap;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tab[b-zqamy3v6wi] {
+    flex: none;
+    height: 48px;
+    padding: 0 14px;
+  }
+
+  .tab .long[b-zqamy3v6wi],
+  .run .summary[b-zqamy3v6wi] {
+    display: none;
+  }
+
+  .tab .short[b-zqamy3v6wi] {
+    display: inline;
+  }
+
+  .run[b-zqamy3v6wi] {
+    flex: none;
+    padding: 0;
+  }
+
+  .run-button[b-zqamy3v6wi] {
+    min-height: 36px;
+    padding: 0 14px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .summary-line[b-zqamy3v6wi] {
+    display: block;
+    margin: 10px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+  }
+}
+
+/* A phone: the Import dialog's cards are sections of one sheet (Card.razor.css), on its surface. */
+@media (max-width: 600px) {
+  .import-body[b-zqamy3v6wi] {
+    padding: 16px;
+    background: var(--surface);
+  }
+}
 /* _content/FellowshipSim.UI/Replay/ImportCard.razor.rz.scp.css */
 .linked-bar[b-y13qcvfuyc] {
   display: flex;
@@ -5512,9 +5916,39 @@ textarea.comment[b-nls708qibr] {
   color: var(--bad);
 }
 
+/* A phone: a section edge to edge, past the page's 16px gutter, with no side borders or corners; sections are 8px apart.
+   A card inside a card keeps its frame, inside the outer one's padding. */
 @media (max-width: 600px) {
   .card[b-fhqvpzxw6i] {
+    margin: 8px -16px;
     padding: 14px 16px;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+
+  .title[b-fhqvpzxw6i] {
+    font-size: 13px;
+  }
+
+  .card .card[b-fhqvpzxw6i] {
+    margin: 8px 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  /* In a dialog, a card is a section of the sheet: no frame, a line between one and the next. */
+  .modal .card[b-fhqvpzxw6i] {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+  }
+
+  .modal .card + .card[b-fhqvpzxw6i] {
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
   }
 }
 
@@ -5576,6 +6010,13 @@ textarea.comment[b-nls708qibr] {
 
 .warning[b-hhjziu8ad3] {
   color: var(--warn);
+}
+
+/* A phone keeps no room for a status line with nothing to say. */
+@media (max-width: 600px) {
+  .message:empty[b-hhjziu8ad3] {
+    display: none;
+  }
 }
 /* _content/FellowshipSim.UI/Shared/ReviewView.razor.rz.scp.css */
 /* The way back on the left, saving on the right. */

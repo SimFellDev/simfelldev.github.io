@@ -363,8 +363,47 @@
   justify-content: flex-end;
 }
 
+/* A phone: a dialog is a sheet up from the window's bottom, the window's full width, its head pinned while its body
+   scrolls (clip, not hidden, so the head can stick), and its buttons 44px. */
 @media (max-width: 600px) {
   .modal-layer {
-    padding: 16px 8px;
+    padding: 24px 0 0;
+  }
+
+  .modal {
+    margin: auto 0 0;
+    max-width: none;
+    overflow: clip;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    border-width: 1px 0 0;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .modal-head {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 6px 6px 6px 16px;
+  }
+
+  .modal-head .icon-button {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dialog-body {
+    padding: 16px;
+  }
+
+  .dialog-body input,
+  .dialog-body select,
+  .dialog-body textarea {
+    font-size: 16px;
+  }
+
+  .dialog-actions button {
+    min-height: 44px;
   }
 }
