@@ -1,5 +1,5 @@
 // The fights the browser keeps for replays (the sim workers read and write them): each fight's raw events as downloaded,
-// in an IndexedDB database of its own, on disk. The page never loads them, so a fight is in memory only in the worker
+// UTF-8 JSON in an IndexedDB database of its own, on disk. The page never loads them, so a fight is in memory only in the worker
 // that replays it. When each was saved is in a store apart, so keeping the newest Kept never reads the fights.
 const Database = 'simfell-fights';
 const Fights = 'fights';
@@ -34,12 +34,20 @@ async function transact(stores, mode, action) {
 /** The key of fight `fightId` of report `reportCode`. */
 export const key = (reportCode, fightId) => `${reportCode}_fight${fightId}`;
 
-/** The fight's raw events as text, or null when the browser does not keep it. */
+/**
+ * The fight's raw events as UTF-8 JSON (a Uint8Array), or null when the browser does not keep it. A fight an earlier
+ * build kept is a string (see bytes).
+ */
 export async function read(fightKey) {
   return (await transact([Fights], 'readonly', t => t.objectStore(Fights).get(fightKey))) ?? null;
 }
 
-/** Keeps a fight, then drops the oldest beyond Kept. */
+/** A kept fight as UTF-8 bytes: an earlier build kept the text as a string. */
+export function bytes(kept) {
+  return typeof kept === 'string' ? new TextEncoder().encode(kept) : kept;
+}
+
+/** Keeps a fight's UTF-8 JSON (a Uint8Array), then drops the oldest beyond Kept. */
 export async function save(fightKey, text) {
   await transact([Fights, Saved], 'readwrite', t => {
     t.objectStore(Fights).put(text, fightKey);

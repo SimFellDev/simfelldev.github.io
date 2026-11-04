@@ -53,7 +53,24 @@ function fail(w, error) {
 
 function ensure() {
   for (let i = workers.length - 1; i >= 0; i--) if (workers[i].dead) workers.splice(i, 1);
-  while (workers.length < size()) workers.push(spawn());
+  while (workers.filter(w => !w.retiring).length < size()) workers.push(spawn());
+}
+
+// A worker that has replayed a fight: a runtime's memory never shrinks, so the worker would keep the replay's peak (up
+// to 2 GB for a long fight) for as long as it runs. It takes no new calls, and stops once its calls are done; the next
+// run starts another in its place.
+function retire(w) {
+  w.retiring = true;
+  release(w);
+}
+
+// One call fewer on a worker; a retiring worker with none left stops.
+function release(w) {
+  w.busy--;
+  if (w.retiring && w.busy === 0 && !w.dead) {
+    w.dead = true;
+    w.worker.terminate();
+  }
 }
 
 function call(w, message, progress) {
@@ -65,7 +82,7 @@ function call(w, message, progress) {
 }
 
 function leastBusy(count) {
-  return [...workers].sort((a, b) => a.busy - b.busy).slice(0, count);
+  return workers.filter(w => !w.retiring).sort((a, b) => a.busy - b.busy).slice(0, count);
 }
 
 /**
@@ -97,11 +114,20 @@ export async function simulate(runId, profileJson, settingsJson, chunkCount, wan
         cancelled.add(runId);
         throw e;
       } finally {
-        w.busy--;
+        release(w);
       }
     }));
     if (done < chunkCount) throw new DOMException('The sim was cancelled.', 'AbortError');
-    return (await call(chosen[0], { type: 'combine', profileJson, settingsJson, chunks })).json;
+    // On a worker of the sim's that still runs: one that replayed a fight meanwhile has stopped.
+    ensure();
+    const w = chosen.find(c => !c.dead) ?? leastBusy(1)[0];
+    await w.ready;
+    w.busy++;
+    try {
+      return (await call(w, { type: 'combine', profileJson, settingsJson, chunks })).json;
+    } finally {
+      release(w);
+    }
   } finally {
     cancelled.delete(runId);
   }
@@ -114,7 +140,7 @@ export function cancel(runId) {
 
 /**
  * Downloads a fight from FellowshipLogs on the least busy worker and replays player `playerId` there; `sink` hears
- * OnProgress(text). Resolves to the reply's JSON. The fight never reaches the page.
+ * OnProgress(text). Resolves to the reply's bytes. The fight never reaches the page.
  */
 export async function reviewFight(reportCode, fightId, playerId, accessToken, clientId, clientSecret, sink) {
   ensure();
@@ -123,26 +149,9 @@ export async function reviewFight(reportCode, fightId, playerId, accessToken, cl
   w.busy++;
   try {
     return (await call(w, { type: 'reviewFight', reportCode, fightId, playerId, accessToken, clientId, clientSecret },
-      text => sink.invokeMethodAsync('OnProgress', text))).json;
+      text => sink.invokeMethodAsync('OnProgress', text))).bytes;
   } finally {
-    w.busy--;
-  }
-}
-
-/**
- * Downloads a fight from FellowshipLogs on the least busy worker, or takes the one the browser keeps, and reads its dungeon
- * with player `playerId`'s hero share there; `sink` hears OnProgress(text). Resolves to the reply's JSON.
- */
-export async function dungeonFight(reportCode, fightId, playerId, accessToken, clientId, clientSecret, sink) {
-  ensure();
-  const [w] = leastBusy(1);
-  await w.ready;
-  w.busy++;
-  try {
-    return (await call(w, { type: 'dungeonFight', reportCode, fightId, playerId, accessToken, clientId, clientSecret },
-      text => sink.invokeMethodAsync('OnProgress', text))).json;
-  } finally {
-    w.busy--;
+    retire(w);
   }
 }
 
@@ -155,20 +164,22 @@ export async function traceFight(profileJson, settingsJson) {
   try {
     return (await call(w, { type: 'traceFight', profileJson, settingsJson })).json;
   } finally {
-    w.busy--;
+    release(w);
   }
 }
 
-
-/** Replays player `playerId` of a raw fight on the least busy worker; `sink` hears OnProgress(text). Resolves to the reply's JSON. */
+/**
+ * Replays player `playerId` of a raw fight's UTF-8 JSON (a Uint8Array) on the least busy worker; `sink` hears
+ * OnProgress(text). Resolves to the reply's bytes.
+ */
 export async function review(rawFight, playerId, sink) {
   ensure();
   const [w] = leastBusy(1);
   await w.ready;
   w.busy++;
   try {
-    return (await call(w, { type: 'review', rawFight, playerId }, text => sink.invokeMethodAsync('OnProgress', text))).json;
+    return (await call(w, { type: 'review', rawFight, playerId }, text => sink.invokeMethodAsync('OnProgress', text))).bytes;
   } finally {
-    w.busy--;
+    retire(w);
   }
 }

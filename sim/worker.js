@@ -14,7 +14,13 @@ try {
   const runtime = await dotnet.create();
   runtime.setModuleImports('simWorker', {
     progress: (id, text) => postMessage({ id, type: 'progress', text }),
-    saveFight: (reportCode, fightId, text) => fights.save(fights.key(reportCode, fightId), text),
+    bytes: bytes => bytes,
+    // The view is on the runtime's memory for this call alone: its bytes are copied before the save starts.
+    saveFight: (reportCode, fightId, view) => {
+      const text = view.slice();
+      view.dispose();
+      return fights.save(fights.key(reportCode, fightId), text);
+    },
   });
   const exports = await runtime.getAssemblyExports('FellowshipSim.Web');
   worker = exports.FellowshipSim.Web.SimWorker;
@@ -33,23 +39,22 @@ onmessage = async ({ data }) => {
       case 'finish': worker.Finish(data.runId); return;
       case 'combine': reply.json = worker.Combine(data.profileJson, data.settingsJson, data.chunks); break;
       case 'traceFight': reply.json = await worker.TraceFight(data.profileJson, data.settingsJson); break;
-      case 'review': reply.json = await worker.Review(data.rawFight, data.playerId, data.id); break;
+      case 'review':
+        // The fight goes in a call of its own, so no frame of the replay holds it.
+        worker.HoldFight(data.rawFight);
+        reply.bytes = await worker.Review(data.playerId, data.id);
+        break;
       case 'reviewFight': {
         // A fight the browser keeps replays from it, costing no FellowshipLogs points; any other is downloaded and kept.
-        const kept = await fights.read(fights.key(data.reportCode, data.fightId));
-        if (kept != null) postMessage({ id: data.id, type: 'progress', text: 'Using the fight saved in this browser' });
-        reply.json = kept != null
-          ? await worker.Review(kept, data.playerId, data.id)
+        const kept = fights.bytes(await fights.read(fights.key(data.reportCode, data.fightId)));
+        if (kept != null) {
+          postMessage({ id: data.id, type: 'progress', text: 'Using the fight saved in this browser' });
+          worker.HoldFight(kept);
+        }
+        reply.bytes = kept != null
+          ? await worker.Review(data.playerId, data.id)
           : await worker.ReviewFight(data.reportCode, data.fightId, data.playerId, data.accessToken, data.clientId,
             data.clientSecret, data.id);
-        break;
-      }
-      case 'dungeonFight': {
-        // A dungeon from the fight the browser keeps, as reviewFight replays one, or else downloaded.
-        const kept = await fights.read(fights.key(data.reportCode, data.fightId));
-        if (kept != null) postMessage({ id: data.id, type: 'progress', text: 'Using the fight saved in this browser' });
-        reply.json = await worker.ReadDungeonFight(data.reportCode, data.fightId, data.playerId, kept ?? '', data.accessToken,
-          data.clientId, data.clientSecret, data.id);
         break;
       }
       default: throw new Error(`No worker call named ${data.type}.`);
@@ -58,5 +63,6 @@ onmessage = async ({ data }) => {
     reply.error = String(e?.message ?? e);
   }
   reply.ms = performance.now() - started;
-  postMessage(reply);
+  // A replay's reply moves to the page without a copy.
+  postMessage(reply, reply.bytes ? [reply.bytes.buffer] : []);
 };
