@@ -1,4 +1,4 @@
-// The fights the browser keeps for replays (the sim workers read and write them): each fight's raw events as downloaded,
+// The fights the browser keeps for replays (the sim workers read and write them): each player's raw fight as downloaded,
 // UTF-8 JSON in an IndexedDB database of its own, on disk. The page never loads them, so a fight is in memory only in the worker
 // that replays it. When each was saved is in a store apart, so keeping the newest Kept never reads the fights.
 const Database = 'simfell-fights';
@@ -31,8 +31,8 @@ async function transact(stores, mode, action) {
   });
 }
 
-/** The key of fight `fightId` of report `reportCode`. */
-export const key = (reportCode, fightId) => `${reportCode}_fight${fightId}`;
+/** The key of player `playerId`'s fight `fightId` of report `reportCode`. */
+export const key = (reportCode, fightId, playerId) => `${reportCode}_fight${fightId}_p${playerId}`;
 
 /**
  * The fight's raw events as UTF-8 JSON (a Uint8Array), or null when the browser does not keep it. A fight an earlier

@@ -16,10 +16,10 @@ try {
     progress: (id, text) => postMessage({ id, type: 'progress', text }),
     bytes: bytes => bytes,
     // The view is on the runtime's memory for this call alone: its bytes are copied before the save starts.
-    saveFight: (reportCode, fightId, view) => {
+    saveFight: (reportCode, fightId, playerId, view) => {
       const text = view.slice();
       view.dispose();
-      return fights.save(fights.key(reportCode, fightId), text);
+      return fights.save(fights.key(reportCode, fightId, playerId), text);
     },
   });
   const exports = await runtime.getAssemblyExports('FellowshipSim.Web');
@@ -46,7 +46,7 @@ onmessage = async ({ data }) => {
         break;
       case 'reviewFight': {
         // A fight the browser keeps replays from it, costing no FellowshipLogs points; any other is downloaded and kept.
-        const kept = fights.bytes(await fights.read(fights.key(data.reportCode, data.fightId)));
+        const kept = fights.bytes(await fights.read(fights.key(data.reportCode, data.fightId, data.playerId)));
         if (kept != null) {
           postMessage({ id: data.id, type: 'progress', text: 'Using the fight saved in this browser' });
           worker.HoldFight(kept);
