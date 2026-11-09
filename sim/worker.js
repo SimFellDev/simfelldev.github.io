@@ -35,7 +35,13 @@ onmessage = async ({ data }) => {
   try {
     switch (data.type) {
       case 'start': worker.Start(data.runId, data.profileJson, data.settingsJson); break;
-      case 'chunk': reply.json = worker.Chunk(data.runId, data.chunk); break;
+      case 'chunk': {
+        reply.json = worker.Chunk(data.runId, data.chunk);
+        // The chunk's fights' DPS moments, for the page's merge in chunk order: read here, so the page reads no chunk.
+        const { count, mean, m2 } = JSON.parse(reply.json);
+        reply.moments = [count, mean, m2];
+        break;
+      }
       case 'finish': worker.Finish(data.runId); return;
       case 'combine': reply.json = worker.Combine(data.profileJson, data.settingsJson, data.chunks); break;
       case 'traceFight': reply.json = await worker.TraceFight(data.profileJson, data.settingsJson); break;

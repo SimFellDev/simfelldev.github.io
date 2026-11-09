@@ -22,6 +22,18 @@ async function read(url, dotnet) {
   return await dotnet.invokeMethodAsync('Read');
 }
 
+// A script parsed by DOMParser never runs, so the page's own script goes in afresh, reading its markup from
+// window.reviewRoot: its row toggles and engine states work here as they do in the saved file.
+function runPageScript(page) {
+  window.reviewRoot = page;
+  for (const parsed of page.querySelectorAll('script:not([type])')) {
+    const script = document.createElement('script');
+    script.textContent = parsed.textContent;
+    parsed.replaceWith(script);
+  }
+  delete window.reviewRoot;
+}
+
 export async function show(host, url, dotnet) {
   const root = host.shadowRoot ?? host.attachShadow({ mode: 'open' });
   host.reviewDotnet = dotnet;
@@ -49,6 +61,7 @@ export async function show(host, url, dotnet) {
   if (html) page.append(...new DOMParser().parseFromString(html, 'text/html').body.childNodes);
   else page.innerHTML = '<p class="muted">No review page.</p>';
   root.replaceChildren(page);
+  runPageScript(page);
   return !!html;
 }
 

@@ -87,7 +87,8 @@ function leastBusy(count) {
 
 /**
  * Runs sim `runId`'s `chunkCount` chunks on up to `wanted` workers (all when null). `sink` (a .NET object) hears
- * OnChunk(done) as each chunk completes. Resolves to the result's JSON; a cancelled run rejects with an AbortError.
+ * OnChunk(chunk, count, mean, m2) as each chunk completes, and answers with the chunks of the result: a sim to a target
+ * error ends at fewer. Resolves to the result's JSON; a cancelled run rejects with an AbortError.
  */
 export async function simulate(runId, profileJson, settingsJson, chunkCount, wanted, sink) {
   ensure();
@@ -95,17 +96,19 @@ export async function simulate(runId, profileJson, settingsJson, chunkCount, wan
   await Promise.all(chosen.map(w => w.ready));
   const chunks = new Array(chunkCount);
   let next = 0;
-  let done = 0;
+  let resultChunks = chunkCount;
   try {
     await Promise.all(chosen.map(async w => {
       w.busy++;
       try {
         await call(w, { type: 'start', runId, profileJson, settingsJson });
         try {
-          while (!cancelled.has(runId) && next < chunkCount) {
+          while (!cancelled.has(runId) && next < resultChunks) {
             const chunk = next++;
-            chunks[chunk] = (await call(w, { type: 'chunk', runId, chunk })).json;
-            sink.invokeMethodAsync('OnChunk', ++done);
+            const reply = await call(w, { type: 'chunk', runId, chunk });
+            chunks[chunk] = reply.json;
+            const answer = await sink.invokeMethodAsync('OnChunk', chunk, ...reply.moments);
+            if (answer >= 0) resultChunks = Math.min(resultChunks, answer);
           }
         } finally {
           if (!w.dead) w.worker.postMessage({ id: 0, type: 'finish', runId });
@@ -117,14 +120,15 @@ export async function simulate(runId, profileJson, settingsJson, chunkCount, wan
         release(w);
       }
     }));
-    if (done < chunkCount) throw new DOMException('The sim was cancelled.', 'AbortError');
+    const result = chunks.slice(0, resultChunks);
+    if (cancelled.has(runId) || result.some(c => c === undefined)) throw new DOMException('The sim was cancelled.', 'AbortError');
     // On a worker of the sim's that still runs: one that replayed a fight meanwhile has stopped.
     ensure();
     const w = chosen.find(c => !c.dead) ?? leastBusy(1)[0];
     await w.ready;
     w.busy++;
     try {
-      return (await call(w, { type: 'combine', profileJson, settingsJson, chunks })).json;
+      return (await call(w, { type: 'combine', profileJson, settingsJson, chunks: result })).json;
     } finally {
       release(w);
     }
