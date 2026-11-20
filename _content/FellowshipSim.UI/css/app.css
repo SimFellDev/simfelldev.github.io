@@ -54,6 +54,7 @@
   --kind-dot: oklch(0.78 0.14 60);
   --kind-cooldown: var(--tok-cooldown);
   --kind-action: oklch(0.84 0.15 110);
+  --kind-channel: oklch(0.78 0.12 200);
   --kind-resource: var(--tok-resource);
   --kind-named: var(--tok-named);
   --kind-action_value: oklch(0.82 0.11 175);
